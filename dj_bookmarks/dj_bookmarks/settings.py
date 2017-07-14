@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'taggit',
     'bootstrap3',
     'authentication',
+    'bookmarks',
 ]
 
 MIDDLEWARE = [
