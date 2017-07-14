@@ -41,7 +41,7 @@ class UserProfile(models.Model):
     def full_name(self):
         if self.first_name:
             return '{} {}'.format(self.first_name, self.last_name)
-        return '{}'.format(self.user.get_short_name())
+        return '{}'.format(self.user.get_username())
 
     @property
     def get_avatar_url(self):

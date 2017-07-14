@@ -3,9 +3,11 @@
 {% block title %}My Profile | {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h2>My Profile</h2>
-    <img src="{{ profile.get_avatar_url }}" alt="">
+    <h2>{{ profile.full_name }}</h2>
+
+    <img src="{{ profile.get_avatar_url }}" alt="" height="150px">
     <hr>
+    <a class="btn btn-warning btn-lg" src="#">Edit</a>
     <h3>About</h3>
     <p>{{ profile.bio }}</p>
 {% endblock %}
