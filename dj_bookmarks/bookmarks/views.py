@@ -33,3 +33,15 @@ class Update(LoginRequiredMixin, generic.UpdateView):
     def get_queryset(self):
         return self.request.user.bookmarks.all()
 
+
+class Delete(LoginRequiredMixin, generic.DeleteView):
+    model = models.Bookmark
+    success_url = reverse_lazy('bookmarks:list')
+
+    def get_queryset(self):
+        return self.request.user.bookmarks.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['delete_view'] = True
+        return context

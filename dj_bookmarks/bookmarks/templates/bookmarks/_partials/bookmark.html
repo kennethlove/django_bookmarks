@@ -13,6 +13,11 @@
             </ul>
         </section>
     </div>
-    <div class="panel-footer"><a href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a> | <a href="#" class="text-danger">Delete</a></div>
+    {% if not delete_view %}
+    <div class="panel-footer clearfix">
+        <a class="pull-left" href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a>
+        <a href="{% url 'bookmarks:delete' pk=bookmark.pk %}" class="pull-right text-danger">Delete</a>
+    </div>
+    {% endif %}
 </div>
 </div>

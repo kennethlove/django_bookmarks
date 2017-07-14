@@ -1,0 +1,14 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}Delete bookmark? | {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% include 'bookmarks/_partials/bookmark.html' %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete this bookmark?</p>
+        <button class="btn btn-danger" type="submit">Yes</button>
+        <a href="{% url 'bookmarks:list' %}" class="btn">No</a>
+    </form>
+{% endblock %}
