@@ -1,0 +1,16 @@
+{% load bootstrap3 %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Bookmarks!{% endblock %}</title>
+        {% bootstrap_css %}
+    </head>
+    <body>
+        {% include '_partials/nav.html' %}
+
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+        {% bootstrap_javascript %}
+    </body>
+</html>
