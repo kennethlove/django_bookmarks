@@ -1,0 +1,16 @@
+{% extends '_layouts/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Sign Up | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <p>Hi, sign up here</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-default">Sign Up</button>
+        {% endbuttons %}
+    </form>
+{% endblock %}
