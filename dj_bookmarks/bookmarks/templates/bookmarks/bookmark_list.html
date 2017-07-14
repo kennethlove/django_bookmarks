@@ -1,0 +1,16 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}{{ user.username }}'s bookmarks | {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% for bookmark in object_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ bookmark }}</div>
+            <div class="panel-body">
+                {{ bookmark.description|linebreaks }}
+                <p><a href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></p>
+            </div>
+            <div class="panel-footer"><a href="#">Edit</a> | <a href="#" class="text-danger">Delete</a></div>
+        </div>
+    {% endfor %}
+{% endblock %}

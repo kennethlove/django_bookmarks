@@ -9,7 +9,7 @@ from taggit.managers import TaggableManager
 
 
 class Bookmark(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='bookmarks')
     url = models.URLField('URL')
     title = models.CharField(default='', blank=True, max_length=255)
     description = models.TextField(default='', blank=True)

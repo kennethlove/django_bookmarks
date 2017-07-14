@@ -12,6 +12,8 @@
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
                 <li class="navbar-text">{{ user.username }}</li>
+                <li><a href="{% url 'bookmarks:list' %}">My Bookmarks</a></li>
+                <li><a href="{% url 'bookmarks:create' %}">Add Bookmark</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>

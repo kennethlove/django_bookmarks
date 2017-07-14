@@ -1,0 +1,14 @@
+{% extends '_layouts/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Create a bookmark | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button class="btn btn-success">Save</button>
+        {% endbuttons %}
+    </form>
+{% endblock %}
