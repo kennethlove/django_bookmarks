@@ -24,3 +24,12 @@ class Create(LoginRequiredMixin, generic.CreateView):
         form.save_m2m()
         return super().form_valid(form)
 
+
+class Update(LoginRequiredMixin, generic.UpdateView):
+    fields = ('url', 'title', 'description', 'tags')
+    model = models.Bookmark
+    success_url = reverse_lazy('bookmarks:list')
+
+    def get_queryset(self):
+        return self.request.user.bookmarks.all()
+

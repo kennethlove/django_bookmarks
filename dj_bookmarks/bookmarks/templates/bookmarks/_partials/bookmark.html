@@ -1,0 +1,18 @@
+<div class="col-md-4">
+<div class="panel panel-default">
+    <div class="panel-heading">{{ bookmark }}</div>
+    <div class="panel-body">
+        {{ bookmark.description|linebreaks }}
+        <p><a href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></p>
+        <section>
+            <ul class="list-inline">
+                <li>tagged with:</li>
+                {% for tag in bookmark.tags.all %}
+                <li>{{ tag }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+    <div class="panel-footer"><a href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a> | <a href="#" class="text-danger">Delete</a></div>
+</div>
+</div>
