@@ -1,0 +1,11 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}My Profile | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h2>My Profile</h2>
+    <img src="{{ profile.get_avatar_url }}" alt="">
+    <hr>
+    <h3>About</h3>
+    <p>{{ profile.bio }}</p>
+{% endblock %}
