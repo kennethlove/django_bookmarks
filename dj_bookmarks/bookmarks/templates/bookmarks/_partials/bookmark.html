@@ -8,21 +8,19 @@
             <ul class="list-inline">
                 <li>tagged with:</li>
                 {% for tag in bookmark.tags.all %}
-                    <li><a href="{% url 'bookmarks:search' tag=tag.name %}">{{ tag }}</a></li>
+                    <li><a href="{% url 'bookmarks:tag_search' tag=tag.name %}">{{ tag }}</a></li>
                 {% endfor %}
             </ul>
         </section>
     </div>
-    {% if not delete_view %}
     <div class="panel-footer clearfix">
-        <a class="pull-left" href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a>
-        <a href="{% url 'bookmarks:delete' pk=bookmark.pk %}" class="pull-right text-danger">Delete</a>
+        {% if not delete_view %}
+            <a class="pull-left" href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a>
+            <a href="{% url 'bookmarks:delete' pk=bookmark.pk %}" class="pull-right text-danger">Delete</a>
+        {% endif %}
+        {% if trash_view %}
+            <a href="{% url 'bookmarks:undelete' pk=bookmark.pk %}" class="pull-right text-success">Restore</a>
+        {% endif %}
     </div>
-    {% endif %}
-    {% if trash_view %}
-    <div class="panel-footer clearfix">
-        <a href="{% url 'bookmarks:undelete' pk=bookmark.pk %}" class="pull-right text-success">Undelete</a>
-    </div>
-    {% endif %}
 </div>
 </div>
