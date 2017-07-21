@@ -10,7 +10,5 @@ AUTH_USER_MODEL = get_user_model()
 @receiver(post_save, sender=AUTH_USER_MODEL)
 def create_profile_handler(sender, instance, **kwargs):
     """As New User created, create and attach Profile"""
-    if not kwargs.get('created'):
-        return None
-    profile = UserProfile.objects.create(user=instance)
-    profile.save()
+    if kwargs.get('created'):
+        profile = UserProfile.objects.create(user=instance)
