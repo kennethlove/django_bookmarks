@@ -12,7 +12,7 @@ class List(LoginRequiredMixin, generic.ListView):
     model = models.Bookmark
 
     def get_queryset(self):
-        queryset = self.request.user.bookmarks.filter(deleted_at__isnull=True)
+        queryset = models.Bookmark.objects.current(self.request.user)
         tag = self.kwargs.get('tag')
         if tag:
             queryset = queryset.filter(tags__name__in=[tag])
@@ -38,7 +38,7 @@ class Update(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy('bookmarks:list')
 
     def get_queryset(self):
-        return self.request.user.bookmarks.all()
+        return models.Bookmark.objects.current(self.request.user)
 
 
 class Delete(LoginRequiredMixin, generic.UpdateView):
@@ -48,7 +48,7 @@ class Delete(LoginRequiredMixin, generic.UpdateView):
     template_name = 'bookmarks/bookmark_confirm_delete.html'
 
     def get_queryset(self):
-        return self.request.user.bookmarks.all()
+        return models.Bookmark.objects.current(self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,7 +72,7 @@ class Trash(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        return self.request.user.bookmarks.filter(deleted_at__isnull=False)
+        return models.Bookmark.objects.deleted(self.request.user)
 
 
 class Undelete(LoginRequiredMixin, RedirectView):

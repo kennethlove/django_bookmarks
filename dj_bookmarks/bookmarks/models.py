@@ -8,6 +8,14 @@ import requests
 from taggit.managers import TaggableManager
 
 
+class BookmarkManager(models.Manager):
+    def deleted(self, user):
+        return user.bookmarks.filter(deleted_at__isnull=False)
+
+    def current(self, user):
+        return user.bookmarks.filter(deleted_at__isnull=True)
+
+
 class Bookmark(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='bookmarks')
     url = models.URLField('URL')
@@ -17,6 +25,7 @@ class Bookmark(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
     tags = TaggableManager()
+    objects = BookmarkManager()
 
     def __str__(self):
         return self.title if self.title else self.url
