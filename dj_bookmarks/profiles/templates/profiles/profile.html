@@ -7,7 +7,7 @@
 
     <img src="{{ profile.get_avatar_url }}" alt="" height="150px">
     <hr>
-    <a class="btn btn-warning btn-lg" src="#">Edit</a>
+    <a class="btn btn-warning btn-lg" href="{% url 'accounts:edit' %}">Edit</a>
     <h3>About</h3>
     <p>{{ profile.bio }}</p>
 {% endblock %}

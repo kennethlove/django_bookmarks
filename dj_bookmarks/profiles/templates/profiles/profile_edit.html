@@ -1,7 +1,14 @@
 {% extends '_layouts/base.html' %}
+{% load bootstrap3 %}
 
 {% block title %}Edit Profile | {{ block.super }}{% endblock %}
 
 {% block content %}
-    Yay! Placeholder content.
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-default">Save</button>
+        {% endbuttons %}
+    </form>
 {% endblock %}

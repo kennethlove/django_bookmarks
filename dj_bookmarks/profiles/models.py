@@ -29,8 +29,8 @@ class UserProfile(models.Model):
 
     @property
     def full_name(self):
-        if self.first_name:
-            return '{} {}'.format(self.first_name, self.last_name)
+        if self.user.first_name and self.user.last_name:
+            return f'{self.user.first_name} {self.user.last_name}'
         return '{}'.format(self.user.get_username())
 
     @property
