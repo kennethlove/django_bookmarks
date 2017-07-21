@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -92,3 +93,15 @@ class Undelete(LoginRequiredMixin, RedirectView):
         bookmark.save()
         return super().get(request, *args, **kwargs)
 
+
+class Search(LoginRequiredMixin, generic.ListView):
+    model = models.Bookmark
+
+    def get_queryset(self):
+        queryset = models.Bookmark.objects.current(self.request.user)
+        q_objects = [
+            Q(title__icontains=word) | Q(description__icontains=word)
+            for word in self.request.GET.get('q').split()
+        ]
+        queryset = queryset.filter(*[q for q in q_objects])
+        return queryset
