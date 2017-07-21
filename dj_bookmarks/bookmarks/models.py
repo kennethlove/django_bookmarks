@@ -15,6 +15,7 @@ class Bookmark(models.Model):
     description = models.TextField(default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(blank=True, null=True)
     tags = TaggableManager()
 
     def __str__(self):
