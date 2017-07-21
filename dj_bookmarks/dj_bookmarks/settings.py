@@ -133,3 +133,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # URLs
 LOGOUT_REDIRECT_URL = 'login'
+
+# Django Taggit
+TAGGIT_CASE_INSENSITIVE = True

@@ -9,7 +9,11 @@ class List(LoginRequiredMixin, generic.ListView):
     model = models.Bookmark
 
     def get_queryset(self):
-        return self.request.user.bookmarks.all()
+        queryset = self.request.user.bookmarks.all()
+        tag = self.kwargs.get('tag')
+        if tag:
+            queryset = queryset.filter(tags__name__in=[tag])
+        return queryset
 
 
 class Create(LoginRequiredMixin, generic.CreateView):
