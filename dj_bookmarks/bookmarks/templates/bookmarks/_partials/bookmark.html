@@ -19,5 +19,10 @@
         <a href="{% url 'bookmarks:delete' pk=bookmark.pk %}" class="pull-right text-danger">Delete</a>
     </div>
     {% endif %}
+    {% if trash_view %}
+    <div class="panel-footer clearfix">
+        <a href="{% url 'bookmarks:undelete' pk=bookmark.pk %}" class="pull-right text-success">Undelete</a>
+    </div>
+    {% endif %}
 </div>
 </div>

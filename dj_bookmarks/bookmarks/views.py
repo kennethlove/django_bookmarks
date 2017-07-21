@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import generic
+from django.views.generic import RedirectView
 
 from . import models
 
@@ -58,3 +60,35 @@ class Delete(LoginRequiredMixin, generic.UpdateView):
         bookmark.deleted_at = timezone.now()
         bookmark.save()
         return super().form_valid(form)
+
+
+class Trash(LoginRequiredMixin, generic.ListView):
+    model = models.Bookmark
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['delete_view'] = True
+        context['trash_view'] = True
+        return context
+
+    def get_queryset(self):
+        return self.request.user.bookmarks.filter(deleted_at__isnull=False)
+
+
+class Undelete(LoginRequiredMixin, RedirectView):
+    url = reverse_lazy('bookmarks:list')
+
+    def get_object(self):
+        return get_object_or_404(
+            models.Bookmark,
+            user=self.request.user,
+            pk=self.kwargs.get('pk'),
+            deleted_at__isnull=False
+        )
+
+    def get(self, request, *args, **kwargs):
+        bookmark = self.get_object()
+        bookmark.deleted_at = None
+        bookmark.save()
+        return super().get(request, *args, **kwargs)
+
