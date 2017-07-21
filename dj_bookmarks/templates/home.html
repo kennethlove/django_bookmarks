@@ -1,0 +1,8 @@
+{% extends '_layouts/base.html' %}
+
+{% block content %}
+<h1>Django Bookmarks!</h1>
+
+<a class="btn btn-default" href="{% url 'login' %}">Login</a>
+<a class="btn btn-default" href="{% url 'signup' %}">Sign up</a>
+{% endblock %}
