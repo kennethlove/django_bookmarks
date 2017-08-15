@@ -9,6 +9,9 @@ from taggit.managers import TaggableManager
 
 
 class BookmarkManager(models.Manager):
+    def get_queryset(self):
+        return super(BookmarkManager, self).get_queryset().prefetch_related('tags')
+
     def deleted(self, user):
         return user.bookmarks.filter(deleted_at__isnull=False)
 
