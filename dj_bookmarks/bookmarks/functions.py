@@ -3,7 +3,7 @@ import requests
 
 def fetch_url_title(url):
     try:
-        r = requests.get(url)
+        r = requests.get(url, timeout=2)
     except requests.exceptions.ConnectionError:
         return
 
