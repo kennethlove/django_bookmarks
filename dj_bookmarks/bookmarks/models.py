@@ -7,6 +7,8 @@ import requests
 
 from taggit.managers import TaggableManager
 
+from dj_bookmarks.bookmarks import functions
+
 
 class BookmarkManager(models.Manager):
     def deleted(self, user):
@@ -35,10 +37,9 @@ class Bookmark(models.Model):
 
 
 @receiver(post_save, sender=Bookmark)
-def fetch_url_title(sender, instance, created, **kwargs):
-    if created:
-        r = requests.get(instance.url)
-        if r.ok:
-            text = r.text
-            instance.title = text[text.find('<title>')+7:text.find('</title>')][:255]
+def fetch_bookmark_url_title(sender, instance, created, **kwargs):
+    if created and not instance.title:
+        title = functions.fetch_url_title(instance.url)
+        if title:
+            instance.title = title
             instance.save()
