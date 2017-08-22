@@ -3,9 +3,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-import requests
-
 from taggit.managers import TaggableManager
+
+from . import functions
 
 
 class BookmarkManager(models.Manager):
@@ -38,10 +38,9 @@ class Bookmark(models.Model):
 
 
 @receiver(post_save, sender=Bookmark)
-def fetch_url_title(sender, instance, created, **kwargs):
-    if created:
-        r = requests.get(instance.url)
-        if r.ok:
-            text = r.text
-            instance.title = text[text.find('<title>')+7:text.find('</title>')][:255]
+def fetch_bookmark_url_title(sender, instance, created, **kwargs):
+    if created and not instance.title:
+        title = functions.fetch_url_title(instance.url)
+        if title:
+            instance.title = title[:255]
             instance.save()
