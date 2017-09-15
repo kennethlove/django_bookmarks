@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import requests
+from django.utils.text import slugify
 
 from taggit.managers import TaggableManager
 
@@ -16,6 +17,7 @@ class BookmarkManager(models.Manager):
         return user.bookmarks.filter(deleted_at__isnull=True)
 
 
+
 class Bookmark(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='bookmarks')
     url = models.URLField('URL')
@@ -24,6 +26,7 @@ class Bookmark(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
+    collections = models.ManyToManyField('Collection')
     tags = TaggableManager()
     objects = BookmarkManager()
 
@@ -32,6 +35,22 @@ class Bookmark(models.Model):
 
     class Meta:
         unique_together = ('url', 'user')
+
+
+class Collection(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='collections')
+    name = models.CharField(max_length=255)
+    slug = models.SlugField()
+
+    class Meta:
+        unique_together = ('user', 'slug')
+
+    def __str__(self):
+        return f'{self.user}: {self.name}'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)[:50]
+        super().save(*args, **kwargs)
 
 
 @receiver(post_save, sender=Bookmark)
