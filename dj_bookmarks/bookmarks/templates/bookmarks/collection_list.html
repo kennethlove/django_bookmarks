@@ -1,0 +1,9 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}{{ user.username }}'s collections | {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% for collection in object_list %}
+        <div>{{ collection.name }}</div>
+    {% endfor %}
+{% endblock %}

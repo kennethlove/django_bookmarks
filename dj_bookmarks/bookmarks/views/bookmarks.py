@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views import generic
 from django.views.generic import RedirectView
 
-from . import models
+from .. import models
 
 
 class List(LoginRequiredMixin, generic.ListView):

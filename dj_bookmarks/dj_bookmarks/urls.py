@@ -30,7 +30,8 @@ urlpatterns = [
     url(r'^signup/$', SignUpView.as_view(), name='signup'),
     url(r'^accounts/', include('profiles.urls', namespace='accounts')),
     url(r'^admin/', admin.site.urls),
-    url(r'^bookmarks/', include('bookmarks.urls', namespace='bookmarks')),
+    url(r'^bookmarks/', include('bookmarks.urls.bookmarks', namespace='bookmarks')),
+    url(r'^collections/', include('bookmarks.urls.collections', namespace='collections')),
 ]
 urlpatterns += staticfiles_urlpatterns()
 
