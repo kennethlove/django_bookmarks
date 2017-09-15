@@ -1,0 +1,9 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}{{ user.username }}'s {{ object.name }} collection | {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% for bookmark in object.bookmark_set.all %}
+        {% include 'bookmarks/_partials/bookmark.html' with bookmark=bookmark %}
+    {% endfor %}
+{% endblock %}

@@ -10,6 +10,11 @@ class List(LoginRequiredMixin, generic.ListView):
         return self.request.user.collections.all()
 
 
+class Detail(LoginRequiredMixin, generic.DetailView):
+    def get_queryset(self):
+        return self.request.user.collections.all()
+
+
 class Create(LoginRequiredMixin, generic.CreateView):
     fields = ('name',)
     model = models.Collection
