@@ -18,10 +18,11 @@ class Detail(LoginRequiredMixin, generic.DetailView):
 class Create(LoginRequiredMixin, generic.CreateView):
     fields = ('name',)
     model = models.Collection
-    success_url = reverse_lazy('collections:list')
 
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
         instance.save()
         return super().form_valid(form)
+
+

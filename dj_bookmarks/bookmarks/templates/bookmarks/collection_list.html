@@ -4,6 +4,9 @@
 
 {% block content %}
     {% for collection in object_list %}
-        <div>{{ collection.name }}</div>
+        <div><a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a></div>
     {% endfor %}
+    <div>
+        <a href="{% url 'collections:create' %}"><i class="glyphicon glyphicon-plus"></i> Add a new collection</a>
+    </div>
 {% endblock %}

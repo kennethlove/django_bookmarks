@@ -1,26 +1,30 @@
 <div class="col-md-4">
-<div class="panel panel-default">
-    <div class="panel-heading">{{ bookmark }}</div>
-    <div class="panel-body">
-        {{ bookmark.description|linebreaks }}
-        <p><a href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></p>
-        <section>
-            <ul class="list-inline">
-                <li>tagged with:</li>
-                {% for tag in bookmark.tags.all %}
-                    <li><a href="{% url 'bookmarks:tag_search' tag=tag.name %}">{{ tag }}</a></li>
-                {% endfor %}
-            </ul>
-        </section>
-    </div>
-    <div class="panel-footer clearfix">
-        {% if not delete_view %}
-            <a class="pull-left" href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a>
-            <a href="{% url 'bookmarks:delete' pk=bookmark.pk %}" class="pull-right text-danger">Delete</a>
-        {% endif %}
-        {% if trash_view %}
-            <a href="{% url 'bookmarks:undelete' pk=bookmark.pk %}" class="pull-right text-success">Restore</a>
-        {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ bookmark }}</div>
+        <div class="panel-body">
+            {{ bookmark.description|linebreaks }}
+            <p><a href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></p>
+            <section>
+                <ul class="list-inline">
+                    <li>tagged with:</li>
+                    {% for tag in bookmark.tags.all %}
+                        <li><a href="{% url 'bookmarks:tag_search' tag=tag.name %}">{{ tag }}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+        <div class="panel-footer clearfix">
+            {% if not delete_view %}
+                <div class="pull-left">
+                    <a href="{% url 'bookmarks:update' pk=bookmark.pk %}">Edit</a> |
+                    <button class="btn btn-sm" data-toggle="modal" data-target=".collection-modal" data-bookmark="{{ bookmark.pk }}">Add to collection</button>
+                </div>
+                <a href="{% url 'bookmarks:delete' pk=bookmark.pk %}" class="pull-right text-danger">Delete</a>
+            {% endif %}
+            {% if trash_view %}
+                <a href="{% url 'bookmarks:undelete' pk=bookmark.pk %}" class="pull-right text-success">Restore</a>
+            {% endif %}
+        </div>
     </div>
 </div>
-</div>
+

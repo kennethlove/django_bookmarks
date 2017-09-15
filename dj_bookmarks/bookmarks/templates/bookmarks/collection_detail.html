@@ -3,7 +3,10 @@
 {% block title %}{{ user.username }}'s {{ object.name }} collection | {{ block.super }}{% endblock %}
 
 {% block content %}
+    <h1>{{ object.name }}</h1>
     {% for bookmark in object.bookmark_set.all %}
         {% include 'bookmarks/_partials/bookmark.html' with bookmark=bookmark %}
+    {% empty %}
+        <p>No bookmarks yet. <a href="#">Add one!</a></p>
     {% endfor %}
 {% endblock %}

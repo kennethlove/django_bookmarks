@@ -19,6 +19,7 @@
             {% if user.is_authenticated %}
                 <li class="navbar-text">{{ user.profile.full_name }}</li>
                 <li><a href="{% url 'bookmarks:list' %}">My Bookmarks</a></li>
+                <li><a href="{% url 'collections:list' %}">My Collections</a></li>
                 <li><a href="{% url 'bookmarks:trash' %}"><i class="glyphicon glyphicon-trash"></i></a></li>
                 <li><a href="{% url 'bookmarks:create' %}"><i class="glyphicon glyphicon-plus"></i></a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>

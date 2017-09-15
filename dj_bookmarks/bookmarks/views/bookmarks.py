@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -105,3 +106,30 @@ class Search(LoginRequiredMixin, generic.ListView):
         ]
         queryset = queryset.filter(*[q for q in q_objects])
         return queryset
+
+
+class AddBookmarkToCollection(LoginRequiredMixin, generic.View):
+    def get_bookmark(self, request):
+        bookmark = get_object_or_404(
+            models.Bookmark,
+            user=self.request.user,
+            id=self.request.GET.get('bookmark')
+        )
+        return bookmark
+
+    def get_collection(self, request):
+        collection = get_object_or_404(
+            models.Collection,
+            user=self.request.user,
+            slug=self.request.GET.get('collection')
+        )
+        return collection
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.collection.get_absolute_url()
+
+    def get(self, request, *args, **kwargs):
+        self.bookmark = self.get_bookmark(request)
+        self.collection = self.get_collection(request)
+        self.bookmark.collections.add(self.collection)
+        return JsonResponse({'success': True})

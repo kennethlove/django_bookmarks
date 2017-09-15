@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import requests
+from django.urls import reverse
 from django.utils.text import slugify
 
 from taggit.managers import TaggableManager
@@ -51,6 +52,9 @@ class Collection(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)[:50]
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('collections:detail', kwargs={'slug': self.slug})
 
 
 @receiver(post_save, sender=Bookmark)
