@@ -104,7 +104,9 @@ class Search(LoginRequiredMixin, generic.ListView):
             Q(title__icontains=word) | Q(description__icontains=word)
             for word in self.request.GET.get('q').split()
         ]
-        queryset = queryset.filter(*[q for q in q_objects])
+        from functools import reduce
+        from operator import ior
+        queryset = queryset.filter(reduce(ior, q_objects, Q()))
         return queryset
 
 
